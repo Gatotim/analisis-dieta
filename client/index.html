@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="src/styles/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analisis Dieta</title>
 </head>
 <body>
-    <input type="file" id="inputAlimento" placeholder="ingresa una imagen">
-    <button onclick="enviarDatos()">analizar</button>
+    <div id="titulo">
+        <h1>Analisis dieta</h1>
+    </div>
+    <div id="analisis">
+        <label for="inputAlimento" id="labelImagen">Seleccionar imagen</label>
+        <input type="file" id="inputAlimento" accept="image/*">
+        <button onclick="enviarDatos()">Analizar</button>
+    </div>
+    <div id="resultado"></div>
+    <script src="/src/js/app.js"></script>
 </body>
 </html>

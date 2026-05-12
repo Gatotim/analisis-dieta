@@ -1,0 +1,56 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: #0f0f0f;
+    color: #ffffff;
+    font-family: 'Segoe UI', sans-serif;
+    min-height: 100hv;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#titulo {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+#titulo h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #00f5a0, #00d9f5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#analisis {
+    background: #1a1a1a;
+    border: 2px dashed #00f5a0;
+    border-radius: 20px;
+    padding: 3rem;
+    text-align: center;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap:1.5rem;
+}
+
+button {
+    background: linear-gradient(90deg, #00f5a0, #00d9f5);
+    border: none;
+    border-radius: 10px;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f0f0f;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
