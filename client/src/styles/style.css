@@ -54,3 +54,21 @@ button {
 button:hover {
     transform: scale(1.05);
 }
+
+#inputAlimento {
+    display: none;
+}
+
+#labelImagen {
+    display: block;
+    border: 2px dashed #00f5a0;
+    border-radius: 15px;
+    padding: 2rem;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #00f5a0;
+    transition: background 0.3s;
+}
+#labelImagen:hover {
+    background: 00f5a01a;
+}
