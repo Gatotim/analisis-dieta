@@ -23,13 +23,19 @@ body {
     font-size: 2.5rem;
     font-weight: 700;
     background: linear-gradient(90deg, #00f5a0, #00d9f5);
+    background-size: 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation: flujoGradiente 3s linear infinite;
+}
+
+@keyframes flujoGradiente {
+    0% {background-position: 0%;}
+    100% { background-position: 200%}
 }
 
 #analisis {
     background: #1a1a1a;
-    border: 2px dashed #00f5a0;
     border-radius: 20px;
     padding: 3rem;
     text-align: center;
@@ -37,8 +43,23 @@ body {
     display: flex;
     flex-direction: column;
     gap:1.5rem;
+    position: relative;
+    border: none;
+    box-shadow: 0 0 15px #00f5a0, 0 0 30px #00f5a040;
+    animation: pulsoNeon 2s ease-in-out infinite;
 }
 
+@keyframes pulsoNeon {
+    0% { box-shadow: 0 0 15px #00f5a0, 0 0 30px #00f5a040; }
+    50% { box-shadow: 0 0 25px #00f5a0, 0 0 50px #00f5a040; }
+    100% { box-shadow: 0 0 15px #00f5a0, 0 0 30px #00f5a040; }
+}
+
+@keyframes pulsoBoton {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05);}
+    100% { transform: scale(1); }
+}
 button {
     background: linear-gradient(90deg, #00f5a0, #00d9f5);
     border: none;
@@ -49,6 +70,7 @@ button {
     color: #0f0f0f;
     cursor: pointer;
     transition: transform 0.2s;
+    animation: pulsoBoton 2s ease-in-out infinite;
 }
 
 button:hover {
@@ -71,4 +93,16 @@ button:hover {
 }
 #labelImagen:hover {
     background: 00f5a01a;
+}
+
+#resultado {
+    margin-top: 1.5rem;
+    color: #ffffff;
+    line-height: 1.8;
+    animation: fadeIn 0.8s ease-in;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0);}
 }
