@@ -20,7 +20,7 @@ app.post('/analizar', async (req, res) => {
                 data: imagen
             }
         },
-        '¿Que ingredientes tiene este alimento? Lista solo los ingredientes.'
+        '¿Que ingredientes tiene este alimento? Lista solo los ingredientes en el siguiente formato: [A, B, C, ...]. No escribas otras palabras fuera de ese formato. No incluyas ingredientes ambigüos como "hierbas" o "especies", dicho ingredientes déjalos fuera.'
     ])
     const respuesta = result.response.text()
     res.json({ ingredientes: respuesta })
