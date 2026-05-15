@@ -35,7 +35,11 @@ async function enviarDatos() {
             });
             
             const datos = await respuesta.json();
-            document.getElementById('resultado').innerHTML = datos.ingredientes;
+            // añadir elementos hijo en lugar de escribir en el mismo bloque permite análisis de múltiples comidas (subiendo una foto
+            // por cada comida)
+            let nel = document.createElement('div');
+            nel.innerHTML = datos.ingredientes;
+            document.getElementById('resultado').appendChild(nel);
             
         } catch(error) {
             console.error("Error al enviar:", error);
