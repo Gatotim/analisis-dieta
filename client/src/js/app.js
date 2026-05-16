@@ -38,7 +38,7 @@ async function enviarDatos() {
             // añadir elementos hijo en lugar de escribir en el mismo bloque permite análisis de múltiples comidas (subiendo una foto
             // por cada comida)
             let nel = document.createElement('div');
-            nel.innerHTML = datos.ingredientes;
+            nel.innerHTML = marked.parse(datos.ingredientes);
             document.getElementById('resultado').appendChild(nel);
             
         } catch(error) {

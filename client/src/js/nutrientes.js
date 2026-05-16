@@ -39,7 +39,8 @@ Usa frases tipo:
         
         const datos = await respuesta.json();
         console.log("Recomendaciones:", datos.ingredientes);
-        return datos;
+        document.getElementById('resultado2').innerHTML = marked.parse(datos.ingredientes)
+        
         
     } catch(error) {
         console.error("Error al enviar:", error);
