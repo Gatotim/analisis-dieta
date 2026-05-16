@@ -11,17 +11,29 @@
     <div id="titulo">
         <h1>Analisis dieta</h1>
     </div>
-    <div id="analisis">
-        <label for="inputAlimento" id="labelImagen">Seleccionar imagen</label>
-        <input type="file" id="inputAlimento" accept="image/*">
-        <button onclick="enviarDatos()">Obtener Ingredientes</button>
-    </div>
-    <div id="preview"></div>
-    <div id="resultado"></div>
-
-    <button onclick="enviarRecomendaciones()">Analizar Alimentación</button>
-    <div id="resultado2"></div>
-    <script src="/src/js/app.js"></script>
-    <script src="/src/js/nutrientes.js"></script>
+    <div id ="contenedor-principal">
+        <div id = "columna-izquierda">
+            <div id="analisis">
+                <label for="inputAlimento" id="labelImagen">Seleccionar imagen</label>
+                <input type="file" id="inputAlimento" accept="image/*">
+                <button onclick="enviarDatos()">Obtener Ingredientes</button>
+            </div>
+            <div id="preview"></div>
+            <div id="resultado"></div>
+            <h2 class ="subtitulo"> Ingredientes detectados</h2>
+            <button id="btnAnalizar" onclick="enviarRecomendaciones()">Analizar Alimentación</button>
+            </div>
+                <div id="columna-derecha">
+                    <h2 class="subtitulo"> Analisis nutricional</h2>
+                    <div id="resultado2"></div>
+                </div>
+            </div>
+            <div id="cargando" style ="display: none">
+                <div class="spinner"></div>
+                <p>Analizando...</p>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+            <script src="/src/js/app.js"></script>
+            <script src="/src/js/nutrientes.js"></script>
 </body>
 </html>
