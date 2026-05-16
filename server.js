@@ -25,6 +25,23 @@ app.post('/analizar', async (req, res) => {
     const respuesta = result.response.text()
     res.json({ ingredientes: respuesta })
 })
+// Endpoint para recomendaciones
+app.post('/recomendaciones', async (req, res) => {
+    console.log('Petición de recomendaciones recibida');
+    
+    const { ingredientes, prompt } = req.body;
+    
+    // Crear el prompt para Gemini
+    const promptCompleto = `
+    ${prompt}
+    ${ingredientes}
+    `;
+        
+    // Llamar a Gemini (asumiendo que ya tienes configurado el modelo)
+    const result = await model.generateContent(promptCompleto);
+    const respuesta = result.response.text();
+    res.json({ ingredientes: respuesta })
+});
 app.listen(8000, () => {
     console.log('Servidor corriendo en el puerto 3000')
 })
