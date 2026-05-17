@@ -10,7 +10,12 @@ const enviarRecomendaciones = async () => {
         console.log(`Comida ${index+1}: ${div.textContent}`);
         ingredientesString += `Comida ${index+1}: ${div.textContent}`;
     });
-    
+    const ingredientes = document.getElementById('resultado').querySelectorAll("div")
+    if(ingredientes.length == 0|| ingredientesString.trim() === ''){
+        alert('primero obten los ingredientes de al menos una comida')
+        return
+    }
+    mostrarCargando()
     
     // Enviar al endpoint
     try {
@@ -40,10 +45,14 @@ Usa frases tipo:
         const datos = await respuesta.json();
         console.log("Recomendaciones:", datos.ingredientes);
         document.getElementById('resultado2').innerHTML = marked.parse(datos.ingredientes)
+        ocultarCargando()
         
         
     } catch(error) {
         console.error("Error al enviar:", error);
+        ocultarCargando()
+        document.getElementById('resultado2').innerHTML = '<p style="color: #ff6b6b;">⚠️ ' + error.message + '</p>'
+
     }
 };
 

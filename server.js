@@ -13,34 +13,53 @@ app.post('/analizar', async (req, res) => {
     console.log('peticion recibida')
     const { imagen } = req.body
 
-    const result = await model.generateContent([
-        {
-            inlineData: {
-                mimeType: 'image/jpeg',
-                data: imagen
-            }
-        },
-        '¿Que ingredientes tiene este alimento? Lista solo los ingredientes en el siguiente formato: [A, B, C, ...]. No escribas otras palabras fuera de ese formato. No incluyas ingredientes ambigüos como "hierbas" o "especies", dicho ingredientes déjalos fuera.'
-    ])
-    const respuesta = result.response.text()
-    res.json({ ingredientes: respuesta })
-})
-// Endpoint para recomendaciones
+    try {
+        const result = await model.generateContent([
+            {
+                inlineData: {
+                    mimeType: 'image/jpeg',
+                    data: imagen
+                }
+            },
+            '¿Que ingredientes tiene este alimento? Lista solo los ingredientes en el siguiente formato: [A, B, C, ...]. No escribas otras palabras fuera de ese formato. No incluyas ingredientes ambigüos como "hierbas" o "especies", dicho ingredientes déjalos fuera.'
+        ])
+        const respuesta = result.response.text()
+        res.json({ ingredientes: respuesta })
+    } catch (error) {
+        console.error('Error Gemini: ', error.message)
+        if(error.message.includes('429')) {
+            res.status(429).json({error: 'limite de cuota alcanzado, intenta mas tarde'})
+        } else {
+            res.status(500).json({error: 'Error al procesar la imagen'})
+        }
+    }
+    })
+    // Endpoint para recomendaciones
 app.post('/recomendaciones', async (req, res) => {
     console.log('Petición de recomendaciones recibida');
     
     const { ingredientes, prompt } = req.body;
     
-    // Crear el prompt para Gemini
-    const promptCompleto = `
-    ${prompt}
-    ${ingredientes}
-    `;
+    try {
+
+        // Crear el prompt para Gemini
+        const promptCompleto = `
+        ${prompt}
+        ${ingredientes}
+        `;
         
-    // Llamar a Gemini (asumiendo que ya tienes configurado el modelo)
-    const result = await model.generateContent(promptCompleto);
-    const respuesta = result.response.text();
-    res.json({ ingredientes: respuesta })
+        // Llamar a Gemini (asumiendo que ya tienes configurado el modelo)
+        const result = await model.generateContent(promptCompleto);
+        const respuesta = result.response.text();
+        res.json({ ingredientes: respuesta })
+    } catch(error) {
+        console.error('Error Gemini: ', error.message)
+        if(error.message.includes('429')) {
+            res.status(429).json({error: 'limite de cuota alcanzado, intenta mas tarde'})
+        } else {
+            res.status(500).json({error: 'Error al procesar la imagen'})
+        }
+    }
 });
 app.listen(8000, () => {
     console.log('Servidor corriendo en el puerto 3000')
