@@ -1,45 +1,24 @@
-// Función asíncrona para obtener los textos y enviarlos
-const enviarRecomendaciones = async () => {
-    // Obtener todos los textos de los divs
-    //const contenedor = document.getElementById("resultado");
-    //const divs = contenedor.querySelectorAll("div");
-    
-    // Crear un string con todos los ingredientes
-    let ingredientesString = "";
+const obtenerAnalisis = async () => {
+    // Obtener los textos de todos los divs y crear un string con los ingredientes
+    let ingredientes = "";
     document.getElementById("resultado").querySelectorAll("div").forEach((div, index) => {
-        console.log(`Comida ${index+1}: ${div.textContent}`);
-        ingredientesString += `Comida ${index+1}: ${div.textContent}`;
+        ingredientes += `Comida ${index+1}: ${div.textContent}`;
     });
-    
+    console.log(`Ingredientes: ${ingredientes}`);
     
     // Enviar al endpoint
     try {
-        const respuesta = await fetch('http://localhost:8000/recomendaciones', {
+        const respuesta = await fetch('http://localhost:8000/analisis', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
-                ingredientes: ingredientesString,
-                prompt: `
-“Analiza los alimentos y genera retroalimentación nutricional en puntos breves. Toma en cuenta que las comidas mostradas abarcan una semana de consumo. Evalúa:
-
-macronutrientes
-vitaminas y minerales
-compuestos relevantes (omega 3, fibra, antioxidantes, etc.)
-riesgos asociados a alimentos específicos (mercurio, purinas, sodio, etc.)
-calidad general de la dieta
-
-Usa frases tipo:
-
-‘has consumido poco…’
-‘has consumido mucho…’
-‘esto puede provocar…’”.
-                `
+                ingredientes: ingredientes,
             })
         });
         
         const datos = await respuesta.json();
         console.log("Recomendaciones:", datos.ingredientes);
-        document.getElementById('resultado2').innerHTML = marked.parse(datos.ingredientes)
+        document.getElementById('resultado2').innerHTML = marked.parse(datos.ingredientes);
         
         
     } catch(error) {

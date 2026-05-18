@@ -15,8 +15,7 @@ document.getElementById("inputAlimento").addEventListener('change', function(eve
     }
 });
 
-// 2. Función para enviar datos SOLO cuando dan click al botón
-async function enviarDatos() {
+async function obtenerIngredientes() {
     const archivo = document.getElementById("inputAlimento").files[0];
     
     if(!archivo) {
@@ -28,7 +27,7 @@ async function enviarDatos() {
     
     lector.onload = async function() {
         try {
-            const respuesta = await fetch('http://localhost:8000/analizar', {
+            const respuesta = await fetch('http://localhost:8000/ingredientes', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
                 body: JSON.stringify({ imagen: lector.result.split(',')[1]})
