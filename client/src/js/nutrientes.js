@@ -4,10 +4,11 @@ const obtenerAnalisis = async () => {
     document.getElementById("resultado").querySelectorAll("div").forEach((div, index) => {
         ingredientes += `Comida ${index+1}: ${div.textContent}`;
     });
-    if(ingredientes.length == 0|| ingredientesString.trim() === ''){
-        alert('primero obten los ingredientes de al menos una comida')
+    if(ingredientes.length == 0|| ingredientes.trim() === ''){
+        alert('No se han registrado comidas, registra almenos una.')
         return
     }
+    console.log(ingredientes)
     mostrarCargando()
     
     // Enviar al endpoint

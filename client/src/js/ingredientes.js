@@ -1,18 +1,10 @@
-    function mostrarCargando(){
-        document.getElementById('cargando').style.display = 'flex'
-    }
-    function ocultarCargando() {
-        document.getElementById('cargando').style.display = 'none'
-    }
-// 1. Configurar el input para mostrar preview al seleccionar
-    document.getElementById("inputAlimento").addEventListener('change', function(evento) {
+document.getElementById("inputAlimento").addEventListener('change', function(evento) {
     const archivo = evento.target.files[0];
     
     if(archivo) {
         const lector = new FileReader();
         
         lector.onload = function(e) {
-            // 👇 Mostrar la imagen INMEDIATAMENTE
             const preview = document.getElementById("preview");
             preview.innerHTML = `<img src="${e.target.result}" style="max-width: 300px; border-radius: 10px; margin-top: 1rem;">`;
         };
