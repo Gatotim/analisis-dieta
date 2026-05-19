@@ -15,21 +15,30 @@ app.post('/ingredientes', async (req, res) => {
     console.log('peticion al endpoint /ingredientes recibida')
     const { imagen } = req.body
 
-    const result = await model.generateContent([
-        {
-            inlineData: {
-                mimeType: 'image/jpeg',
-                data: imagen
-            }
-        },
-        '¿Que ingredientes tiene este alimento? Lista solo los ingredientes en el siguiente formato: [A, B, C, ...]. No escribas otras palabras fuera de ese formato. No incluyas ingredientes ambigüos como "hierbas" o "especies", dicho ingredientes déjalos fuera.'
-    ])
-    const respuesta = result.response.text()
-    res.json({ ingredientes: respuesta })
-})
-// endpoint para obtener análisis nutrimental de ingredientes
-app.post('/analisis', async (req, res) => {
-    console.log('peticion al endpoint /analisis recibida')
+    try {
+        const result = await model.generateContent([
+            {
+                inlineData: {
+                    mimeType: 'image/jpeg',
+                    data: imagen
+                }
+            },
+            '¿Que ingredientes tiene este alimento? Lista solo los ingredientes en el siguiente formato: [A, B, C, ...]. No escribas otras palabras fuera de ese formato. No incluyas ingredientes ambigüos como "hierbas" o "especies", dicho ingredientes déjalos fuera.'
+        ])
+        const respuesta = result.response.text()
+        res.json({ ingredientes: respuesta })
+    } catch (error) {
+        console.error('Error Gemini: ', error.message)
+        if(error.message.includes('429')) {
+            res.status(429).json({error: 'limite de cuota alcanzado, intenta mas tarde'})
+        } else {
+            res.status(500).json({error: 'Error al procesar la imagen'})
+        }
+    }
+    })
+    // Endpoint para recomendaciones
+app.post('/recomendaciones', async (req, res) => {
+    console.log('Petición de recomendaciones recibida');
     
     const { ingredientes } = req.body;
     

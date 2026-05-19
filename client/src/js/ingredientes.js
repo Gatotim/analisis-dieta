@@ -1,5 +1,11 @@
+    function mostrarCargando(){
+        document.getElementById('cargando').style.display = 'flex'
+    }
+    function ocultarCargando() {
+        document.getElementById('cargando').style.display = 'none'
+    }
 // 1. Configurar el input para mostrar preview al seleccionar
-document.getElementById("inputAlimento").addEventListener('change', function(evento) {
+    document.getElementById("inputAlimento").addEventListener('change', function(evento) {
     const archivo = evento.target.files[0];
     
     if(archivo) {
@@ -26,6 +32,7 @@ async function obtenerIngredientes() {
     const lector = new FileReader();
     
     lector.onload = async function() {
+        mostrarCargando()
         try {
             const respuesta = await fetch('http://localhost:8000/ingredientes', {
                 method: 'POST',
@@ -39,9 +46,12 @@ async function obtenerIngredientes() {
             let nel = document.createElement('div');
             nel.innerHTML = marked.parse(datos.ingredientes);
             document.getElementById('resultado').appendChild(nel);
+            ocultarCargando()
             
         } catch(error) {
             console.error("Error al enviar:", error);
+            ocultarCargando()
+            document.getElementById('resultado').innerHTML = '<p style="color: #ff6b6b;">⚠️ ' + error.message + '</p>'
         }
     };
     

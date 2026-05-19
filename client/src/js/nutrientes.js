@@ -4,7 +4,11 @@ const obtenerAnalisis = async () => {
     document.getElementById("resultado").querySelectorAll("div").forEach((div, index) => {
         ingredientes += `Comida ${index+1}: ${div.textContent}`;
     });
-    console.log(`Ingredientes: ${ingredientes}`);
+    if(ingredientes.length == 0|| ingredientesString.trim() === ''){
+        alert('primero obten los ingredientes de al menos una comida')
+        return
+    }
+    mostrarCargando()
     
     // Enviar al endpoint
     try {
@@ -18,11 +22,15 @@ const obtenerAnalisis = async () => {
         
         const datos = await respuesta.json();
         console.log("Recomendaciones:", datos.ingredientes);
-        document.getElementById('resultado2').innerHTML = marked.parse(datos.ingredientes);
+        document.getElementById('resultado2').innerHTML = marked.parse(datos.ingredientes)
+        ocultarCargando()
         
         
     } catch(error) {
         console.error("Error al enviar:", error);
+        ocultarCargando()
+        document.getElementById('resultado2').innerHTML = '<p style="color: #ff6b6b;">⚠️ ' + error.message + '</p>'
+
     }
 };
 
