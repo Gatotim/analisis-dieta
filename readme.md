@@ -12,5 +12,4 @@
 5. Ver la consola del frontend para obtener tu resultado (pendiente renderizar el análisis en la interfaz)
 
 #### TODO:
-- añadir un feedback visual (dígase un spinner loading) al momento de que se envía una imagen a Gemini y se espera respuesta,
-lo mismo para el momento en que se envían los ingredientes a procesar y se espera el análisis como respuesta.
+...
