@@ -2,6 +2,7 @@
 ...
 
 1. [Como Usar](#como-usar)
+2. [TODO](#todo)
 
 #### Como Usar:
 1. Seleccionar una imagen
