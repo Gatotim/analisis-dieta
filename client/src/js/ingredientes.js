@@ -1,18 +1,10 @@
-    function mostrarCargando(){
-        document.getElementById('cargando').style.display = 'flex'
-    }
-    function ocultarCargando() {
-        document.getElementById('cargando').style.display = 'none'
-    }
-// 1. Configurar el input para mostrar preview al seleccionar
-    document.getElementById("inputAlimento").addEventListener('change', function(evento) {
+document.getElementById("inputAlimento").addEventListener('change', function(evento) {
     const archivo = evento.target.files[0];
     
     if(archivo) {
         const lector = new FileReader();
         
         lector.onload = function(e) {
-            // 👇 Mostrar la imagen INMEDIATAMENTE
             const preview = document.getElementById("preview");
             preview.innerHTML = `<img src="${e.target.result}" style="max-width: 300px; border-radius: 10px; margin-top: 1rem;">`;
         };
@@ -21,8 +13,7 @@
     }
 });
 
-// 2. Función para enviar datos SOLO cuando dan click al botón
-async function enviarDatos() {
+async function obtenerIngredientes() {
     const archivo = document.getElementById("inputAlimento").files[0];
     
     if(!archivo) {
@@ -35,7 +26,7 @@ async function enviarDatos() {
     lector.onload = async function() {
         mostrarCargando()
         try {
-            const respuesta = await fetch('http://localhost:8000/analizar', {
+            const respuesta = await fetch('http://localhost:8000/ingredientes', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
                 body: JSON.stringify({ imagen: lector.result.split(',')[1]})

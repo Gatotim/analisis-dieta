@@ -1,16 +1,18 @@
 require('dotenv').config()
 
+const express = require('express')
+const cors = require('cors')
 const {GoogleGenerativeAI} = require('@google/generative-ai')
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
 const model = genAI.getGenerativeModel({model: "gemini-3-flash-preview"})
-const express = require('express')
+
 const app = express()
-const cors = require('cors')
 app.use(cors())
 app.use(express.json({limit: '10mb'}))
 
-app.post('/analizar', async (req, res) => {
-    console.log('peticion recibida')
+// endpoint para obtener ingredientes de una comida
+app.post('/ingredientes', async (req, res) => {
+    console.log('peticion al endpoint /ingredientes recibida')
     const { imagen } = req.body
 
     try {
@@ -33,34 +35,38 @@ app.post('/analizar', async (req, res) => {
             res.status(500).json({error: 'Error al procesar la imagen'})
         }
     }
-    })
-    // Endpoint para recomendaciones
-app.post('/recomendaciones', async (req, res) => {
-    console.log('Petición de recomendaciones recibida');
+})
+// endpoint para obtener análisis nutricional
+app.post('/analisis', async (req, res) => {
+    console.log('peticion al endpoint /analisis recibida')
     
-    const { ingredientes, prompt } = req.body;
+    const { ingredientes } = req.body;
     
-    try {
+    const prompt = `
+${ingredientes}
+“Analiza los alimentos y genera retroalimentación nutricional en puntos breves.
+Toma en cuenta que las comidas mostradas abarcan una semana de consumo.
+Las comidas no indican patrones de consumo, representan exactamente los alimentos consumidos durante la semana.
+Evalúa:
+- macronutrientes
+- vitaminas y minerales
+- compuestos relevantes (omega 3, fibra, antioxidantes, etcétera...)
+- riesgos asociados a alimentos específicos (mercurio, purinas, sodio, etc.)
+- calidad general de la dieta
 
-        // Crear el prompt para Gemini
-        const promptCompleto = `
-        ${prompt}
-        ${ingredientes}
-        `;
+Usa frases tipo:
+'has consumido poco…'
+'has consumido mucho…'
+'esto puede provocar…'”
+Deja una línea vacía entre cada sección.
+    `;
         
-        // Llamar a Gemini (asumiendo que ya tienes configurado el modelo)
-        const result = await model.generateContent(promptCompleto);
-        const respuesta = result.response.text();
-        res.json({ ingredientes: respuesta })
-    } catch(error) {
-        console.error('Error Gemini: ', error.message)
-        if(error.message.includes('429')) {
-            res.status(429).json({error: 'limite de cuota alcanzado, intenta mas tarde'})
-        } else {
-            res.status(500).json({error: 'Error al procesar la imagen'})
-        }
-    }
+    // Llamar a Gemini (asumiendo que ya tienes configurado el modelo)
+    const result = await model.generateContent(prompt);
+    const respuesta = result.response.text();
+    res.json({ ingredientes: respuesta })
 });
+
 app.listen(8000, () => {
-    console.log('Servidor corriendo en el puerto 3000')
+    console.log('Servidor corriendo en el puerto 8000')
 })
