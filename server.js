@@ -35,10 +35,10 @@ app.post('/ingredientes', async (req, res) => {
             res.status(500).json({error: 'Error al procesar la imagen'})
         }
     }
-    })
-    // Endpoint para recomendaciones
-app.post('/recomendaciones', async (req, res) => {
-    console.log('Petición de recomendaciones recibida');
+})
+// endpoint para obtener análisis nutricional
+app.post('/analisis', async (req, res) => {
+    console.log('peticion al endpoint /analisis recibida')
     
     const { ingredientes } = req.body;
     
